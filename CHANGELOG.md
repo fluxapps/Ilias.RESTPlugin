@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [3.0.1] - 2022-03-04
+### Fixed
+- Ensure the requested SSO Tokens are valid and not already expired
+
+## [3.0.0] - 2021-09-16
+### Added
+- ILIAS 7 Support
+### Removed
+- App unrelated extension routes.
+
+## [2.0.2] - 2020-11-18
+### Fixed
+- The learning progress of the parent object gets updated now
+
 ## [2.0.1] - 2020-09-30
 ### Fixed
 - The learning module metadata route no longer returns invalid entry point paths in certain scenarios

@@ -32,14 +32,14 @@ class Content
                             throw new ContentException('Invalid base64 string');
                         }
                         $data = base64_decode($data);
-                        if ($data === false && !$options->skipValidation) {
+                        if ($data === false && !$options->skipValidation) { // @phpstan-ignore-line
                             throw new ContentException('Unable to decode base64');
                         }
                         break;
                 }
             }
 
-            if ($mediaType !== null) {
+            if ($mediaType !== null && $data !== false) {
                 switch ($mediaType) {
                     case self::MEDIA_TYPE_APPLICATION_JSON:
                         $data = json_decode($data);
@@ -70,7 +70,7 @@ class Content
                 }
             }
 
-            if ($encoding !== null) {
+            if ($encoding !== null && $data !== false) {
                 switch ($encoding) {
                     case self::ENCODING_BASE64:
                         $data = base64_encode($data);

@@ -41,7 +41,7 @@ trait ClassStructureTrait
     }
 
     /**
-     * @return Properties|static
+     * @return Properties|static|null
      */
     public static function properties()
     {
@@ -92,14 +92,34 @@ trait ClassStructureTrait
 
     protected $__validateOnSet = true; // todo skip validation during import
 
+    /**
+     * @return \stdClass
+     */
     public function jsonSerialize()
     {
         $result = new \stdClass();
         $schema = static::schema();
-        foreach ($schema->getProperties()->getDataKeyMap() as $propertyName => $dataName) {
-            $value = $this->$propertyName;
-            if ((null !== $value) || array_key_exists($propertyName, $this->__arrayOfData)) {
-                $result->$dataName = $value;
+        $properties = $schema->getProperties();
+        $processed = array();
+        if (null !== $properties) {
+            foreach ($properties->getDataKeyMap() as $propertyName => $dataName) {
+                $value = $this->$propertyName;
+
+                // Value is exported if exists.
+                if (null !== $value || array_key_exists($propertyName, $this->__arrayOfData)) {
+                    $result->$dataName = $value;
+                    $processed[$propertyName] = true;
+                    continue;
+                }
+
+                // Non-existent value is only exported if belongs to nullable property (having 'null' in type array).
+                $property = $schema->getProperty($propertyName);
+                if ($property instanceof Schema) {
+                    $types = $property->type;
+                    if ($types === Schema::NULL || (is_array($types) && in_array(Schema::NULL, $types))) {
+                        $result->$dataName = $value;
+                    }
+                }
             }
         }
         foreach ($schema->getNestedPropertyNames() as $name) {
@@ -112,14 +132,26 @@ trait ClassStructureTrait
             }
         }
 
+        if (!empty($this->__arrayOfData)) {
+            foreach ($this->__arrayOfData as $name => $value) {
+                if (!isset($processed[$name])) {
+                    $result->$name = $this->{$name};
+                }
+            }
+        }
+
         return $result;
     }
 
     /**
      * @return static|NameMirror
      */
-    public static function names()
+    public static function names(Properties $properties = null, $mapping = Schema::DEFAULT_MAPPING)
     {
+        if ($properties !== null) {
+            return new NameMirror($properties->getDataKeyMap($mapping));
+        }
+
         static $nameflector = null;
         if (null === $nameflector) {
             $nameflector = new NameMirror();

@@ -13,7 +13,6 @@
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 $fields = array(
@@ -40,8 +39,6 @@ $database->createTable('ui_uihk_rest_config', $fields, true);
 $database->addPrimaryKey('ui_uihk_rest_config', array('id'));
 $database->manipulate('ALTER TABLE ui_uihk_rest_config CHANGE id id INT NOT NULL AUTO_INCREMENT');
 $database->manipulate('ALTER TABLE ui_uihk_rest_config ADD UNIQUE (setting_name)');
-
-$log->root()->debug('Plugin REST -> DB-Update #1: Created ui_uihk_rest_config.');
 ?>
 <#2>
 <?php
@@ -49,7 +46,6 @@ $log->root()->debug('Plugin REST -> DB-Update #1: Created ui_uihk_rest_config.')
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 function gen_uuid()
@@ -118,8 +114,6 @@ $database->insert('ui_uihk_rest_config', array(
     'setting_name' => array('text', 'log_level'),
     'setting_value' => array('text', null),
 ));
-
-$log->root()->alert('Plugin REST -> DB-Update #2: Filled ui_uihk_rest_config.');
 ?>
 <#3>
 <?php
@@ -127,7 +121,6 @@ $log->root()->alert('Plugin REST -> DB-Update #2: Filled ui_uihk_rest_config.');
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 $fields = array(
@@ -244,8 +237,6 @@ $database->createTable('ui_uihk_rest_client', $fields, true);
 $database->addPrimaryKey('ui_uihk_rest_client', array('id'));
 $database->manipulate('ALTER TABLE ui_uihk_rest_client CHANGE id id INT NOT NULL AUTO_INCREMENT');
 $database->manipulate('ALTER TABLE ui_uihk_rest_client ADD UNIQUE (api_key)');
-
-$log->root()->debug('Plugin REST -> DB-Update #3: Created ui_uihk_rest_client.');
 ?>
 <#4>
 <?php
@@ -253,7 +244,6 @@ $log->root()->debug('Plugin REST -> DB-Update #3: Created ui_uihk_rest_client.')
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 $api_key = 'apollon';
@@ -270,12 +260,6 @@ $database->insert('ui_uihk_rest_client', array(
 ));
 // TODO: Store into admin-panel config
 
-/**
- * @var \ILIAS\DI\Container $container
- */
-$container = $GLOBALS["DIC"];
-$log = $container->logger();
-$log->root()->debug('Plugin REST -> DB-Update #4: Filled ui_uihk_rest_client.');
 ?>
 <#5>
 <?php
@@ -283,7 +267,6 @@ $log->root()->debug('Plugin REST -> DB-Update #4: Filled ui_uihk_rest_client.');
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 $fields = array(
@@ -314,8 +297,6 @@ $database->createTable('ui_uihk_rest_perm', $fields, true);
 
 $database->addPrimaryKey('ui_uihk_rest_perm', array('id'));
 $database->manipulate('ALTER TABLE ui_uihk_rest_perm CHANGE id id INT NOT NULL AUTO_INCREMENT');
-
-$log->root()->debug('Plugin REST -> DB-Update #5: Created ui_uihk_rest_perm.');
 ?>
 <#6>
 <?php
@@ -323,7 +304,6 @@ $log->root()->debug('Plugin REST -> DB-Update #5: Created ui_uihk_rest_perm.');
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 $id = 1;
@@ -397,8 +377,6 @@ $database->insert('ui_uihk_rest_perm', array(
     'pattern' => array('text', '/v1/clients/:id'),
     'verb' => array('text', 'DELETE'),
 ));
-
-$log->root()->debug('Plugin REST -> DB-Update #6: Filled ui_uihk_rest_perm.');
 ?>
 <#7>
 <?php
@@ -406,7 +384,6 @@ $log->root()->debug('Plugin REST -> DB-Update #6: Filled ui_uihk_rest_perm.');
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 $fields = array(
@@ -443,8 +420,6 @@ $database->createTable('ui_uihk_rest_refresh', $fields, true);
 
 $database->addPrimaryKey('ui_uihk_rest_refresh', array('id'));
 $database->manipulate('ALTER TABLE ui_uihk_rest_refresh CHANGE id id INT NOT NULL AUTO_INCREMENT');
-
-$log->root()->debug('Plugin REST -> DB-Update #7: Created ui_uihk_rest_refresh.');
 ?>
 <#8>
 <?php
@@ -452,7 +427,6 @@ $log->root()->debug('Plugin REST -> DB-Update #7: Created ui_uihk_rest_refresh.'
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 $fields = array(
@@ -481,8 +455,6 @@ $database->createTable('ui_uihk_rest_authcode', $fields, true);
 
 $database->addPrimaryKey('ui_uihk_rest_authcode', array('id'));
 $database->manipulate('ALTER TABLE ui_uihk_rest_authcode CHANGE id id INT NOT NULL AUTO_INCREMENT');
-
-$log->root()->debug('Plugin REST -> DB-Update #8: Created ui_uihk_rest_authcode.');
 ?>
 <#9>
 <?php
@@ -490,7 +462,6 @@ $log->root()->debug('Plugin REST -> DB-Update #8: Created ui_uihk_rest_authcode.
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 $fields = array(
@@ -519,8 +490,6 @@ $database->createTable('ui_uihk_rest_access', $fields, true);
 
 $database->addPrimaryKey('ui_uihk_rest_access', array('id'));
 $database->manipulate('ALTER TABLE ui_uihk_rest_access CHANGE id id INT NOT NULL AUTO_INCREMENT');
-
-$log->root()->debug('Plugin REST -> DB-Update #9: Created ui_uihk_rest_access.');
 ?>
 <#10>
 <?php
@@ -528,7 +497,6 @@ $log->root()->debug('Plugin REST -> DB-Update #9: Created ui_uihk_rest_access.')
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 $fields = array(
@@ -551,8 +519,6 @@ $fields = array(
 $database->createTable('ui_uihk_rest_token', $fields, true);
 
 $database->addPrimaryKey('ui_uihk_rest_token', array('user_id'));
-
-$log->root()->debug('Plugin REST -> DB-Update #10: Created ui_uihk_rest_token.');
 ?>
 <#11>
 <?php
@@ -560,7 +526,6 @@ $log->root()->debug('Plugin REST -> DB-Update #10: Created ui_uihk_rest_token.')
  * @var \ILIAS\DI\Container $container
  */
 $container = $GLOBALS["DIC"];
-$log = $container->logger();
 $database = $container->database();
 
 require_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/REST/RESTController/extensions/ilias_app_v2/services/FileHashing/entity/HashCacheEntry.php';
@@ -568,6 +533,4 @@ require_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHoo
 use RESTController\extensions\ILIASApp\V2\HashCacheEntry;
 
 HashCacheEntry::installDB();
-
-$log->root()->debug('Plugin REST -> DB-Update #11: Created ui_uihk_rest_hashcache.');
 ?>

@@ -8,7 +8,7 @@ which contains changes required by the Pegasus mobile application. Only use this
 branch with the ILIAS Pegasus mobile application.
 
 ## Requirements
-* Version: ILIAS 5.3 - 6
+* Version: ILIAS 5.3 - 7
 * PHP 5.6 or higher or PHP 7.0 - 7.4
 
 ## Installation
@@ -51,3 +51,13 @@ More examples can be found in the [wiki](https://github.com/hrz-unimr/Ilias.REST
 
 ## License
 This project is licensed under the GNU GPLv3 License - see the LICENSE.md file for details.
+
+## Contact
+
+fluxlabs AG
+Scheunenstrasse 19
+3400 Burgdorf  
+Switzerland
+
+[connect@fluxlabs.ch](mailto:connect@fluxlabs.ch)  
+<https://fluxlabs.ch>

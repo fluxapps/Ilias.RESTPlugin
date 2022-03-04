@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2dd3f1246e1d2a707e561fdd27b68554",
+    "content-hash": "7bb3b8514eab8fb41ecd1b56edf50023",
     "packages": [
         {
             "name": "phplang/scope-exit",
@@ -48,20 +48,24 @@
                 "exit",
                 "scope"
             ],
+            "support": {
+                "issues": "https://github.com/phplang/scope-exit/issues",
+                "source": "https://github.com/phplang/scope-exit/tree/master"
+            },
             "time": "2016-09-17T00:15:18+00:00"
         },
         {
             "name": "swaggest/json-diff",
-            "version": "v3.7.4",
+            "version": "v3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swaggest/json-diff.git",
-                "reference": "fccbbd6ee31b5949ab52e9c53f7a1e1b06d84716"
+                "reference": "d2184358c5ef5ecaa1f6b4c2bce175fac2d25670"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swaggest/json-diff/zipball/fccbbd6ee31b5949ab52e9c53f7a1e1b06d84716",
-                "reference": "fccbbd6ee31b5949ab52e9c53f7a1e1b06d84716",
+                "url": "https://api.github.com/repos/swaggest/json-diff/zipball/d2184358c5ef5ecaa1f6b4c2bce175fac2d25670",
+                "reference": "d2184358c5ef5ecaa1f6b4c2bce175fac2d25670",
                 "shasum": ""
             },
             "require": {
@@ -87,32 +91,36 @@
                 }
             ],
             "description": "JSON diff/rearrange/patch/pointer library for PHP",
-            "time": "2020-01-26T20:52:06+00:00"
+            "support": {
+                "issues": "https://github.com/swaggest/json-diff/issues",
+                "source": "https://github.com/swaggest/json-diff/tree/v3.8.1"
+            },
+            "time": "2020-09-25T17:47:07+00:00"
         },
         {
             "name": "swaggest/json-schema",
-            "version": "v0.12.10",
+            "version": "v0.12.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swaggest/php-json-schema.git",
-                "reference": "5a8e78f79cdc050560b0e3cea1b13d8b72af0d17"
+                "reference": "1d7cce2dac6844a8a612672ad5936e8c4145e96a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swaggest/php-json-schema/zipball/5a8e78f79cdc050560b0e3cea1b13d8b72af0d17",
-                "reference": "5a8e78f79cdc050560b0e3cea1b13d8b72af0d17",
+                "url": "https://api.github.com/repos/swaggest/php-json-schema/zipball/1d7cce2dac6844a8a612672ad5936e8c4145e96a",
+                "reference": "1d7cce2dac6844a8a612672ad5936e8c4145e96a",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
+                "ext-mbstring": "*",
                 "php": ">=5.4",
                 "phplang/scope-exit": "^1.0",
                 "swaggest/json-diff": "^3.5.1"
             },
             "require-dev": {
-                "codeclimate/php-test-reporter": "0.4.0",
-                "phpunit/php-code-coverage": "2.2.4",
-                "phpunit/phpunit": "4.8.35"
+                "phpunit/php-code-coverage": "^4",
+                "phpunit/phpunit": "^5"
             },
             "type": "library",
             "autoload": {
@@ -131,7 +139,12 @@
                 }
             ],
             "description": "High definition PHP structures with JSON-schema based validation",
-            "time": "2019-05-16T12:33:02+00:00"
+            "support": {
+                "email": "vearutop@gmail.com",
+                "issues": "https://github.com/swaggest/php-json-schema/issues",
+                "source": "https://github.com/swaggest/php-json-schema/tree/v0.12.37"
+            },
+            "time": "2021-08-29T14:47:54+00:00"
         }
     ],
     "packages-dev": [],
@@ -140,9 +153,12 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-json": "*"
+    },
     "platform-dev": [],
     "platform-overrides": {
         "php": "5.5"
-    }
+    },
+    "plugin-api-version": "2.1.0"
 }

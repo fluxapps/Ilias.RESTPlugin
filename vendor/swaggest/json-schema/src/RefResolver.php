@@ -11,7 +11,7 @@ class RefResolver
 {
     public $resolutionScope = '';
     public $url;
-    /** @var RefResolver */
+    /** @var null|RefResolver */
     private $rootResolver;
 
     /**
@@ -131,7 +131,7 @@ class RefResolver
     /**
      * @param string $referencePath
      * @return Ref
-     * @throws InvalidValue
+     * @throws Exception
      */
     public function resolveReference($referencePath)
     {
@@ -161,10 +161,10 @@ class RefResolver
                     try {
                         $path = JsonPointer::splitPath($referencePath);
                     } catch (\Swaggest\JsonDiff\Exception $e) {
-                        throw new InvalidValue('Invalid reference: ' . $referencePath . ', ' . $e->getMessage());
+                        throw new InvalidRef('Invalid reference: ' . $referencePath . ', ' . $e->getMessage());
                     }
 
-                    /** @var JsonSchema $branch */
+                    /** @var JsonSchema|\stdClass $branch */
                     $branch = &$refResolver->rootData;
                     while (!empty($path)) {
                         if (isset($branch->{Schema::PROP_ID_D4}) && is_string($branch->{Schema::PROP_ID_D4})) {
@@ -181,7 +181,7 @@ class RefResolver
                         } elseif (is_array($branch) && isset($branch[$folder])) {
                             $branch = &$branch[$folder];
                         } else {
-                            throw new InvalidValue('Could not resolve ' . $referencePath . '@' . $this->getResolutionScope() . ': ' . $folder);
+                            throw new InvalidRef('Could not resolve ' . $referencePath . '@' . $this->getResolutionScope() . ': ' . $folder);
                         }
                     }
                     $ref->setData($branch);
@@ -194,6 +194,10 @@ class RefResolver
                     $this->setResolutionScope($url);
                     if (null === $refResolver) {
                         $rootData = $rootResolver->getRefProvider()->getSchemaData($url);
+                        if ($rootData === null || $rootData === false) {
+                            throw new Exception("Failed to decode content from $url", Exception::RESOLVE_FAILED);
+                        }
+
                         $refResolver = new RefResolver($rootData);
                         $refResolver->rootResolver = $rootResolver;
                         $refResolver->refProvider = $this->refProvider;

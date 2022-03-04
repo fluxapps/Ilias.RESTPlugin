@@ -7,6 +7,10 @@ use ilSessionAppointment;
 use ilTemplate;
 use RESTController\extensions\ILIASApp\V2\data\IliasTreeItem;
 use \RESTController\libs as Libs;
+use DateTimeZone;
+use DateTimeImmutable;
+use DateInterval;
+use DateTime;
 
 require_once('./Services/Membership/classes/class.ilParticipants.php');
 require_once('./Modules/File/classes/class.ilObjFile.php');
@@ -85,7 +89,9 @@ final class ILIASAppModel extends Libs\RESTModel
 
         if (
             is_array($token) &&
-            array_key_exists("token", $token)) {
+            array_key_exists("token", $token) &&
+            strtotime($token['expires']) > time()
+        ) {
             return $token['token'];
         }
 
@@ -99,7 +105,7 @@ final class ILIASAppModel extends Libs\RESTModel
             "expires" => array("timestamp", $expires)
         );
 
-        $this->db->insert("ui_uihk_rest_token", $fields);
+        $this->db->replace('ui_uihk_rest_token', ['user_id' => ['integer', $userId]], $fields);
 
         return $token;
     }
@@ -144,8 +150,9 @@ final class ILIASAppModel extends Libs\RESTModel
         $fileName = mb_strtolower($file->getFileName());
         $fileName = preg_replace('/[^a-z0-9\-_\.]+/', '', $fileName);
 
+        //The new ResourceStorage in ILIAS 7.2 does not implement the file extension method call.
         return array(
-            'fileExtension' => $file->getFileExtension(),
+            'fileExtension' => $this->getFileExtensionOrEmptyString($file),
             'fileName' => $fileName,
             'fileSize' => $file->getFileSize(),
             'fileType' => $file->getFileType(),
@@ -161,6 +168,14 @@ final class ILIASAppModel extends Libs\RESTModel
             return $this->getChildrenRecursiveOnNestedSet($refId, $userId);
         } else {
             return $this->getChildrenRecursiveOnMaterializedPath($refId, $userId);
+        }
+    }
+
+    private function getFileExtensionOrEmptyString(\ilObjFile $file) {
+        try {
+            return $file->getFileExtension();
+        } catch (\Exception $exception) {
+            return '';
         }
     }
 

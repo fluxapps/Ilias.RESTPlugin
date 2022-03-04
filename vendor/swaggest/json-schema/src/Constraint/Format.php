@@ -10,7 +10,9 @@ class Format
 {
     const DATE_TIME = 'date-time';
     const DATE = 'date';
+    const FULL_DATE = 'full-date';
     const TIME = 'time';
+    const FULL_TIME = 'full-time';
     const URI = 'uri';
     const IRI = 'iri';
     const EMAIL = 'email';
@@ -29,7 +31,7 @@ class Format
     public static $strictDateTimeValidation = false;
 
     private static $dateRegexPart = '(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])';
-    private static $timeRegexPart = '([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)([01][0-9]|2[0-3]):([0-5][0-9]))?';
+    private static $timeRegexPart = '([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)([01][0-9]|2[0-3]):?([0-5][0-9])?)?';
     private static $jsonPointerRegex = '_^(?:/|(?:/[^/#]*)*)$_';
     private static $jsonPointerRelativeRegex = '~^(0|[1-9][0-9]*)((?:/[^/#]*)*)(#?)$~';
     private static $jsonPointerUnescapedTilde = '/~([^01]|$)/';
@@ -40,8 +42,10 @@ class Format
             case self::DATE_TIME:
                 return self::dateTimeError($data);
             case self::DATE:
+            case self::FULL_DATE:
                 return preg_match('/^' . self::$dateRegexPart . '$/i', $data) ? null : 'Invalid date';
             case self::TIME:
+            case self::FULL_TIME:
                 return preg_match('/^' . self::$timeRegexPart . '$/i', $data) ? null : 'Invalid time';
             case self::URI:
                 return Uri::validationError($data, Uri::IS_SCHEME_REQUIRED);
@@ -56,6 +60,9 @@ class Format
             case self::IPV6:
                 return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ? null : 'Invalid ipv6';
             case self::HOSTNAME:
+                if (strlen(rtrim($data, '.')) >= 254) { // Not sure if it should be 254, higher number fails AJV suite.
+                    return 'Invalid hostname (too long)';
+                }
                 return preg_match(Uri::HOSTNAME_REGEX, $data) ? null : 'Invalid hostname';
             case self::IDN_HOSTNAME:
                 return IdnHostname::validationError($data);
