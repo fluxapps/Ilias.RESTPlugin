@@ -1,3 +1,9 @@
+# Deprecated
+Use this plugin for the ILIAS Pegasus App.
+
+For all other use cases have a look to:
+https://github.com/fluxfw/flux-ilias-rest-api
+
 # ILIAS REST Plugin
 
 This is a plugin for the [ILIAS Learning Management System](<http://www.ilias.de>), which provides a customizable REST API.
